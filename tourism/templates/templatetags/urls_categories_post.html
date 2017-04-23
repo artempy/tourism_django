@@ -1,0 +1,7 @@
+{% if categories %}
+{% for category in categories %}
+    <a href="{% url 'category' category.slug %}" rel="category tag">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
+{% endfor %}
+{% else %}
+    Категории отсутствуют
+{% endif %}

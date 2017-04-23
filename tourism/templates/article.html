@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load related_posts %}
+{% block title %}{{ title_meta }}{% endblock %}
+{% block description %}{{ description_meta }}{% endblock %}
+{% block content %}
+{% if article %}
+    <div class="spacer"></div>
+    <div id="post-{{ article.id }}" class="postbox post-{{ article.id }} post type-post status-publish format-standard has-post-thumbnail hentry">
+        <div class="postbox2">
+            <div class="postbox3">
+                <div class="post_title">
+                    <h2>{{ article.name }}</h2>
+                </div>
+                <div class="post_author_date"> </div>
+                <div class="clear"></div>
+                <div class="entry">
+                    <p>{{ article.full_post|safe }}</p>
+                    <div class="clear"></div>
+                </div>
+                <div class="info">
+                    <span class="info_category">Раздел:
+                    {% if post.category %}
+                        {% for cat in post.category.all %}
+                        <a href="{% url 'category' cat.slug %}" rel="category tag">{{ cat.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    </span>&nbsp;
+                    <span class="info_comment"><a href="{% url 'article' category.slug article.slug %}" rel="bookmark" title="{{ article.title }}">Читать далее...</a></span>
+                </div>
+                {% related_posts article.tags %}
+            </div><!-- #postbox3 -->
+        </div><!-- #postbox2 -->
+    </div><!-- #postbox -->
+
+{% else %}
+    <div class="entry">Запись не найдена!</div>
+{% endif %}
+{% endblock %}

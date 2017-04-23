@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load top_articles %}
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+        <title>{% block title %}Туризм и путешествия по Европе. Культура, традиции, особенности. Достопримечательности городов и стран Европы.{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %}С помощью данного сайта Вы сможете определиться с выбором где отдохнуть в Европе. Узнаете о достопримечательностях, особенностях, климате, культуре{% endblock %}" />
+        <script type='text/javascript' src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/menu.css' %}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{% static 'css/client.css' %}" type="text/css" media="all" />
+        <style type="text/css">#content{float:right;} div.menu ul li{float:left;}</style>
+        <script type="text/javascript" src="{% static 'js/templatelite-general.js' %}"></script>
+        <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    </head>
+    <body class="home blog">
+        <div id="bg_top"><div id="bg_btm"><div id="base"><div id="base_top"><div id="base_btm">
+            <div id="header">
+                        <div id="blog_name"><a href="http://veuropetourism.ru/" title="Туризм и путешествия по Европе" rel="home">Туризм и путешествия по Европе</a></div>
+                <div id="blog_desc">Страны и города Европы</div>
+                <a href="http://veuropetourism.ru/" title="Туризм в Европе" class="home"></a>
+
+            </div><!-- #header -->
+            <div id="menubar">
+                <div class="menu"><ul><li><a href="/category/dostoprimechatelnosti_europe">Достопримечательности</a></li><li><a href="/category/prazdniki_v_europe">Праздники</a></li><li><a href="/category/strany_goroda_europe">Города</a></li><li><a href="/category/pogoda_v_stranah_europe">Погода</a></li></ul></div>
+                <form class="mainsearch" action="{% url 'search' %}" method="POST">
+                    <input class="keyword" type="text" name="s" id="s"/>
+                    <input class="submit" value="" type="submit"/>
+                </form>
+            </div>
+            <div id="container"><div id="container_top"><div id="container_btm">
+        <div id="content">
+            <div id="content_top">
+                <div id="content_btm">
+                {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div><!-- #content_btm, #content_top, #content-->
+        <div id="sidebar"><div id="sidebar_top"><div id="sidebar_btm">
+        <div id="sidebar1">
+            <ul>
+            <li id="text-2" class="widget_text"><div class="sb1_block_top"><div class="sb1_block_btm"><h4 class="sb1_title">Навигация по сайту</h4>         <div class="textwidget"><ul>
+        <li class="cat-item cat-item-1"><a href="/" title="Перейти на главную страницу сайта"><img src="{% static 'images/icons/home-28x28.png' %}" class="category_icon" alt="Главная страница">Главная страница</a>
+        </li>
+        <li class="cat-item cat-item-3"><a href="/category/information_velikobritaniya" title="Просмотреть все записи в рубрике Информация о Великобритании"><img src="{% static 'images/icons/united_kingdom-28x28.png' %}" class="category_icon" alt="Информация о Великобритании">Информация о Великобритании</a>
+        </li>
+        <li class="cat-item cat-item-3"><a href="/category/information_denmark" title="Просмотреть все записи в рубрике Информация о Дании"><img src="{% static 'images/icons/denmark-28x28.png' %}" class="category_icon" alt="Информация о Дании">Информация о Дании</a>
+        </li>
+            <li class="cat-item cat-item-4"><a href="/category/information_spain" title="Просмотреть все записи в рубрике Информация об Испании"><img src="{% static 'images/icons/spain-28x28.png' %}" class="category_icon" alt="Информация об Испании">Информация об Испании</a>
+        </li>
+            <li class="cat-item cat-item-5"><a href="/category/information_italy" title="Просмотреть все записи в рубрике Информация об Италии"><img src="{% static 'images/icons/italy-28x28.png' %}" class="category_icon" alt="Информация об Италии">Информация об Италии</a>
+        </li>
+            <li class="cat-item cat-item-6"><a href="/category/information_france" title="Просмотреть все записи в рубрике Информация о Франции"><img src="{% static 'images/icons/france-28x28.png' %}" class="category_icon" alt="Информация о Франции">Информация о Франции</a>
+        </li>
+            <li class="cat-item cat-item-7"><a href="/category/information_germany" title="Просмотреть все записи в рубрике Информация о Германии"><img src="{% static 'images/icons/germany-28x28.png' %}" class="category_icon" alt="Информация о Германии">Информация о Германии</a>
+        </li>
+            <li class="cat-item cat-item-8"><a href="/category/information_kipr" title="Просмотреть все записи в рубрике Информация о Кипре"><img src="{% static 'images/icons/cyprus-28x28.png' %}" class="category_icon" alt="Информация о Кипре">Информация о Кипре</a>
+        </li>
+            <li class="cat-item cat-item-9"><a href="/category/information_czech" title="Просмотреть все записи в рубрике Информация о Чехии"><img src="{% static 'images/icons/czech_republic-28x28.png' %}" class="category_icon" alt="Информация о Чехии">Информация о Чехии</a>
+        </li>
+        <li class="cat-item cat-item-9"><a href="/category/information_switzerland" title="Просмотреть все записи в рубрике Информация о Швейцарии"><img src="{% static 'images/icons/switzerland-28x28.png' %}" class="category_icon" alt="Информация о Швейцарии">Информация о Швейцарии</a>
+        </li>
+        <li class="cat-item cat-item-9"><a href="/category/information_sweden" title="Просмотреть все записи в рубрике Информация о Швеции"><img src="{% static 'images/icons/sweden-28x28.png' %}" class="category_icon" alt="Информация о Швеции">Информация о Швеции</a>
+        </li>
+            <li class="cat-item cat-item-11"><a href="/category/prazdniki_v_europe" title="Просмотреть все записи в рубрике Праздники в Европе"><img src="{% static 'images/icons/strelka-28x28.png' %}" class="category_icon" alt="Праздники в Европе">Праздники в Европе</a>
+        </li>
+            <li class="cat-item cat-item-12"><a href="/category/strany_goroda_europe" title="Просмотреть все записи в рубрике Страны и города Европы"><img src="{% static 'images/icons/strelka-28x28.png' %}" class="category_icon" alt="Страны и города Европы">Страны и города Европы</a>
+        </li>
+            <li class="cat-item cat-item-13"><a href="/category/chislennost_naseleniya_stran_europe" title="Просмотреть все записи в рубрике Численность населения стран Европы"><img src="{% static 'images/icons/strelka-28x28.png' %}" class="category_icon" alt="Численность населения стран Европы">Численность населения стран Европы</a>
+        </li>
+            <li class="cat-item cat-item-14"><a href="/category/pogoda_v_stranah_europe" title="Просмотреть все записи в рубрике Погода в странах Европы"><img src="{% static 'images/icons/strelka-28x28.png' %}" class="category_icon" alt="Погода в странах Европы">Погода в странах Европы</a>
+        </li>
+            <li class="cat-item cat-item-10"><a href="/category/dostoprimechatelnosti_europe" title="Просмотреть все записи в рубрике Достопримечательности стран Европы"><img src="{% static 'images/icons/strelka-28x28.png' %}" class="category_icon" alt="Достопримечательности стран Европы">Достопримечательности стран Европы</a>
+        </li>
+        </ul></div>
+                </div></div></li>
+
+            <!-- get_top_articles -->
+
+            </ul>
+        </div><!--#sidebar1-->
+        </div></div></div><!-- #sidebar_btm, #sidebar_top, #sidebar-->
+        <!-- footer.php -->
+                <div class="clear"></div>
+            </div></div></div><!--  #container_btm, #container_top, #container -->
+            <div id="footer">
+                <div id="footer_credit">
+                &copy; 2012 - {% now 'Y' %} - Туризм и путешествия по Европе (<a href="http://veuropetourism.ru/contact/" style="border-bottom: 1px dotted">Обратная связь</a>)<br/>
+                Частичное использование материалов сайта возможно только с установкой индексируемой ссылки на сайт <a href="http://veuropetourism.ru/">http://veuropetourism.ru/</a>
+                    </div>
+            </div><!-- footer -->
+        </div></div></div><!-- #base_btm ,#base_top, #base -->
+        </div></div><!-- #bg_btm, #bg_top -->
+        <div class="hide-div"><script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-36654127-1']);
+          _gaq.push(['_trackPageview']);
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script></div>
+        <script type='text/javascript' src='{% static "js/jquery.colorbox.js" %}'></script>
+    </body>
+</html>

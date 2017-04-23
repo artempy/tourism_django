@@ -1,0 +1,16 @@
+{% if top_articles %}
+<li id="recent-posts-2" class="widget_recent_entries">
+    <div class="sb1_block_top">
+        <div class="sb1_block_btm">
+            <h4 class="sb1_title">Популярные записи</h4>
+            <ul>
+            {% for article in top_articles %}
+                <li>
+                    <a href="{% url 'article' article.category.slug article.slug %}">{{ article.name }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</li>
+{% endif %}
