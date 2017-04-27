@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import re
 from django.db import models
+from PIL import Image
+from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.utils import timezone
+from django.utils.html import strip_tags
 from tagging.fields import TagField
 
 
@@ -12,19 +15,34 @@ class ArticlePageMixin(models.Model):
     description_meta = models.CharField(max_length=150, null=True, blank=True)
 
     def _get_unique_slug(self):
-        slug = unique_slug = slugify(self.name)
+        if self.slug:
+            slug = unique_slug = self.slug
+        else:
+            slug = unique_slug = slugify(self.name)
         num = 1
         """If slug of article exists in DB then change name's slug"""
-        while self.__class__.__name__.objects.\
-                filter(slug=unique_slug).exists():
+        while self.__class__.objects.filter(slug=unique_slug).exists():
             unique_slug = '{1}-{2}'.format(slug, num)
             num += 1
         return unique_slug
 
+    def _generate_metatags(self, text, max_length=80):
+        text = strip_tags(text)
+        if len(text) <= max_length:
+            return text
+        words = text.split(' ')
+        sentences = ''
+        for word in words:
+            sentences += word + ' '
+            if len(sentences) > max_length:
+                return sentences.strip()
+
     def save(self, *args, **kwargs):
         """If slug don't determinated then creating it"""
-        if not self.slug:
+        id_article = self.__dict__.get('id', None)
+        if not self.slug or id_article is None:
             self.slug = self._get_unique_slug()
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -45,17 +63,33 @@ class Category(ArticlePageMixin):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+    def save(self, *args, **kwargs):
+        """If no set meta-parameters html - title or description then
+        generate their"""
+        if not self.title_meta:
+            self.title_meta = self._generate_metatags(self.name, 75)
+        if not self.description_meta:
+            self.description_meta = \
+                self._generate_metatags(self.description, 145)
+
+        super().save(*args, **kwargs)
+
 
 class Article(ArticlePageMixin):
     category = models.ManyToManyField(Category, verbose_name='Категория')
-    prefix_slug = models.SlugField(blank=True)
     name = models.CharField(max_length=128,
                             verbose_name='Название', db_index=True)
     short_post = models.TextField(verbose_name='Краткое описание')
     full_post = models.TextField(verbose_name='Полное описание')
     date = models.DateTimeField(verbose_name='Дата', default=timezone.now)
-    thumb = models.ImageField(upload_to='images/%Y/%m/%d/', blank=True,
-                              null=True, verbose_name='Изображение')
+    slug_cat_unique = models.SlugField(db_index=True, blank=True)
+    thumb = models.ImageField(
+        upload_to='images/%Y/%m/%d/thumb/',
+        blank=True,
+        null=True,
+        verbose_name='Изображение',
+        editable=True
+    )
     tags = TagField(blank=True)
     likes = models.IntegerField(default=0, db_index=True, blank=True)
 
@@ -65,6 +99,16 @@ class Article(ArticlePageMixin):
         words = list(filter(lambda word: len(word) > 3, words))
         return " ".join(words).lower()
 
+    def _resize_thumb(self):
+        """Create reduced image for article"""
+        image = Image.open(self.thumb)
+        (width, height) = image.size
+        THUMB_WIDTH = getattr(settings, 'THUMB_WIDTH', 150)
+        THUMB_HEIGHT = getattr(settings, 'THUMB_HEIGHT', 225)
+        size = (THUMB_WIDTH, THUMB_HEIGHT)
+        image = image.resize(size, Image.ANTIALIAS)
+        image.save(self.thumb.path)
+
     def save(self, *args, **kwargs):
         """If tags not determinated then generating their"""
         if not self.tags:
@@ -72,9 +116,18 @@ class Article(ArticlePageMixin):
             if tags:
                 self.tags = self._create_tags()
 
-        if not self.prefix_slug:
-            pass
+        """If no set meta-parameters html - title or description then
+        generate their"""
+        if not self.title_meta:
+            self.title_meta = self._generate_metatags(self.name, 75)
+        if not self.description_meta:
+            self.description_meta = \
+                self._generate_metatags(self.full_post, 145)
+
         super().save(*args, **kwargs)
+        """Resize image"""
+        if self.thumb:
+            self._resize_thumb()
 
     class Meta:
         verbose_name = 'Статья'
