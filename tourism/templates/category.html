@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}{{ title_meta }}{% endblock %}
-{% block description %}{{ description_meta }}{% endblock %}
+{% block meta_description %}{{ description_meta }}{% endblock %}
 {% block content %}
 {% if category.description %}
     <h1 class="archivetitle">{{ category.name }}</h1>
+    {% if page_obj.number == 1 %}
     <div class="entry">
         {{ category.description|safe }}
     </div>
+    {% endif %}
 {% endif %}
 {% if posts %}
     {% for post in posts %}
@@ -14,7 +16,7 @@
         <div class="postbox2">
             <div class="postbox3">
                 <div class="post_title">
-                    <h2><a href="{% url 'article' category.slug post.slug %}" rel="bookmark" title="{{ post.name }}">{{ post.name }}</a></h2>
+                    <h2><a href="{% url 'article' post.slug_cat_unique post.slug %}" rel="bookmark" title="{{ post.name }}">{{ post.name }}</a></h2>
                 </div>
                 <div class="post_author_date"> </div>
                 <div class="clear"></div>
@@ -37,6 +39,9 @@
         </div><!-- #postbox2 -->
     </div><!-- #postbox -->
     {% endfor %}
+    {% if is_paginated %}
+        {% include 'paginator.html' %}
+    {% endif %}
 {% else %}
     <div class="entry">Записи не найдены!</div>
 {% endif %}
