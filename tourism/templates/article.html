@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load related_posts %}
-{% block title %}{{ title_meta }}{% endblock %}
-{% block description %}{{ description_meta }}{% endblock %}
+{% block title %}{% if title_meta %}{{ title_meta }}{% endif %}{% endblock %}
+{% if description_meta %}{% block meta_description %}{{ description_meta }}{% endblock %}{% endif %}
 {% block content %}
 {% if article %}
     <div class="spacer"></div>
@@ -19,19 +19,18 @@
                 </div>
                 <div class="info">
                     <span class="info_category">Раздел:
-                    {% if post.category %}
-                        {% for cat in post.category.all %}
+                    {% if article.category %}
+                        {% for cat in article.category.all %}
                         <a href="{% url 'category' cat.slug %}" rel="category tag">{{ cat.name }}</a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                     {% endif %}
                     </span>&nbsp;
-                    <span class="info_comment"><a href="{% url 'article' category.slug article.slug %}" rel="bookmark" title="{{ article.title }}">Читать далее...</a></span>
                 </div>
-                {% related_posts article.tags %}
+                {% related_posts article.tags article.id %}
             </div><!-- #postbox3 -->
         </div><!-- #postbox2 -->
     </div><!-- #postbox -->
-
+{% include 'comments.html' %}
 {% else %}
     <div class="entry">Запись не найдена!</div>
 {% endif %}
