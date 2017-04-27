@@ -6,7 +6,7 @@
             <ul>
             {% for article in top_articles %}
                 <li>
-                    <a href="{% url 'article' article.category.slug article.slug %}">{{ article.name }}</a>
+                    <a href="{% url 'article' article.slug_cat_unique article.slug %}">{{ article.name }}</a>
                 </li>
             {% endfor %}
             </ul>
