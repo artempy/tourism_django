@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'snowpenguin.django.recaptcha2',
-    'taggit',
     'tagging',
     'ckeditor',
     'apps.posts',
@@ -103,6 +102,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 MEDIA_URL = '/media/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+THUMB_WIDTH = 150
+THUMB_HEIGHT = 225
 
 
 def get_env_variable(var_name):
