@@ -12,4 +12,5 @@ def get_top_articles():
         posts = Article.objects.all().order_by('-likes')[:7]
     except Article.DoesNotExist:
         posts = None
+
     return {'top_articles': posts}
