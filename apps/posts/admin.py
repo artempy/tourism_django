@@ -45,8 +45,17 @@ class ArticleAdmin(admin.ModelAdmin):
         ('Тэги', {'fields': ('tags',), 'classes': ('collapse',)}),
         (None, {'fields': ('thumb',)}),
     ]
+    filter_horizontal = ('category',)
     prepopulated_fields = {'slug': ('name',)}
     form = ArticleAdminForm
+
+    def save_model(self, request, instance, form, change):
+        if 'category' in request.POST:
+            category_id = request.POST.getlist('category')[0]
+            category = Category.objects.get(pk=category_id)
+            instance.slug_cat_unique = category.slug
+
+        instance.save()
 
 
 class CategoryAdmin(admin.ModelAdmin):
