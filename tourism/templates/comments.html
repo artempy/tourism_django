@@ -1,12 +1,12 @@
 {% load static %}
-<div class="container">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+{% if comments %}
     <div class="row">
     <!-- Contenedor Principal -->
     <div class="comments-container">
         <h2>Комментарии</h2>
 
         <ul id="comments-list" class="comments-list">
+        {% for comment in comments %}
             <li>
                 <div class="comment-main-level">
                     <!-- Avatar -->
@@ -14,21 +14,53 @@
                     <!-- Contenedor del Comentario -->
                     <div class="comment-box">
                         <div class="comment-head">
-                            <h6 class="comment-name by-author">Дядя Вася</h6>
-                            <span>25.12.2017 в 12:15</span>
-                            <i class="fa fa-reply"></i>
-                            <i class="fa fa-heart liked" class="liked" aria-hidden="true">15</i>
+                            <h6 id="author" class="comment-name by-author">{{ comment.author }}</h6>
+                            <span>{{ comment.created_date|date:"d F Y в H:i" }}</span>
+                            <i id="reply_comment" class="fa fa-reply"></i>
                         </div>
                         <div class="comment-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? sdfhdsfhdfshdfshdfshdsfhdfhdfshdsfhdfhdsfhdfshdfsh dsfhdsfhdfshdfsh
+                            {{ comment.text }}
                         </div>
                     </div>
                 </div>
             </li>
-
-
-
+        {% endfor %}
         </ul>
     </div>
     </div>
-</div>
+    {% if comments.paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+    <div class="paginate">
+    <ul class="pagination justify-content-center">
+        {% if comments.has_previous %}
+            <li >
+                <a aria-label="Previous" class="page-link" href="{{ starturl }}/comments/page/{{ comments.previous_page_number }}/" title="Предыдущая страница"><span>&laquo;</span></a>
+            </li>
+        {% else %}
+            <li class="disabled">
+                <a class="page-link" href="#"><span>&laquo;</span></a>
+            </li>
+        {% endif %}
+            {% for i in comments.paginator.page_range %}
+                {% if comments.number == i %}
+                <li class="active"><a href="#">{{i}}</a></li>
+                {% else %}
+                  <li ><a class="page-link" href="{{ starturl }}/comments/page/{{ i }}/">{{i}}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% if comments.has_next %}
+            <li >
+                <a class="page-link" href="{{ starturl }}/comments/page/{{ comments.next_page_number }}/" title="Следующая страница"><span>&raquo;</span></a>
+            </li>
+        {% else %}
+            <li class="disabled">
+                <a class="page-link" href="#">
+                <span>&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+    </div>
+    </nav>
+    {% endif %}
+{% endif %}
