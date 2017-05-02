@@ -509,7 +509,7 @@ div.menu ul li:hover > ul{ display:block; }
 
 #sidebar1 div.sb1_block_btm{
     margin:0;
-    width:250px; /*have to set for stupid ie7*/
+    width:268px; /*have to set for stupid ie7*/
     padding:55px 9px 15px 9px;
     background:url('/static/images/bg_sb1_btm.jpg') no-repeat center bottom;
 }
@@ -1135,11 +1135,11 @@ img.page_icon, img.category_icon {
     height:28px;/**/
 }
 
-.page_item a, .cat-item a{
+.cat-item a{
     text-decoration:none;
 }
 
-#sidebar li.page_item:before, #sidebar li.cat-item:before {
+#sidebar #sidebar li.cat-item:before {
    content: "";
 }
 
@@ -1148,101 +1148,17 @@ img.page_icon, img.category_icon {
 }
 
 
-/* pagination */
-
-.pagination {
-    height: 36px;
-    margin: 18px 0;
-    color: #815634;
-margin: auto;
-}
-
-.pagination ul {
-    display: inline-block;
-    *display: inline;
-    /* IE7 inline-block hack */
-    *zoom: 1;
-	margin: auto;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.pagination li {
-    display: inline;
-    color: #815634;
-}
-
-.pagination a {
-    float: left;
-    padding: 0 14px;
-    line-height: 34px;
-    color: #815634;
-    text-decoration: none;
-    border: 1px solid #1D440B;
-    border-left-width: 0;
-
-}
-
-.pagination a:hover,
-.pagination .active a {
-    background-color: #815634;
-    color: #ffffff;
-}
-
-.pagination a:focus {
-    background-color: #815634;
-    color: #ffffff;
-}
 
 
-.pagination .active a {
-    color: #ffffff;
-    cursor: default;
-}
-
-.pagination .disabled span,
-.pagination .disabled a,
-.pagination .disabled a:hover {
-    color: #999999;
-    background-color: transparent;
-    cursor: default;
-}
-
-.pagination li:first-child a {
-    border-left-width: 1px;
-    -webkit-border-radius: 3px 0 0 3px;
-    -moz-border-radius: 3px 0 0 3px;
-    border-radius: 3px 0 0 3px;
-	background-color: #C2B777;
-}
-
-.pagination li:last-child a {
-    -webkit-border-radius: 0 3px 3px 0;
-    -moz-border-radius: 0 3px 3px 0;
-    border-radius: 0 3px 3px 0;
-	background-color: #C2B777;
-}
-
-.pagination-centered {
+.paginate {
     text-align: center;
 }
-
-.pagination-right {
-    text-align: right;
-}
-/* end */
-
-
 /** ====================
  * Lista de Comentarios
  =======================*/
 .comments-container {
 	margin: 30px auto 15px;
-	width: 700px;
+	width: 95%;
 }
 
 .comments-list {
@@ -1326,14 +1242,30 @@ margin: auto;
  * Caja del Comentario
  ---------------------------*/
 .comments-list .comment-box {
-	width: 540px;
+	width: 85%;
 	float: right;
 	position: relative;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 	-moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 	box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 }
-
+.likes_b {
+    background: #FCFCFC;
+}
+.likes_b i {
+    float: right;
+    margin-left: 14px;
+    position: relative;
+    top: 2px;
+    color: #A6A6A6;
+    cursor: pointer;
+    -webkit-transition: color 0.3s ease;
+    -o-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+}
+.likes_b i:hover {
+    color: #03658c;
+}
 .comments-list .comment-box:before, .comments-list .comment-box:after {
 	content: '';
 	height: 0;
@@ -1425,6 +1357,30 @@ margin: auto;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
+
+/** =====================
+ * Responsive
+ ========================*/
+@media only screen and (max-width: 700px) {
+    .comments-container {
+        width: 480px;
+    }
+
+    .comments-list .comment-box {
+        width: 390px;
+    }
+
+    .reply-list .comment-box {
+        width: 320px;
+    }
+}
+/* Add comment */
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}
+
+
 .liked::before {
   color: #600;
   content: '\f004';
@@ -1434,18 +1390,65 @@ margin: auto;
   color: #aaa;
   content: '\f08a';
 }
+
+
 /** =====================
- * Responsive
+ * Scroll
  ========================*/
-@media only screen and (max-width: 700px) {
-	.comments-container {
-		width: 480px;
-	}
+.cd-top {
+ display: inline-block;
+ overflow: hidden;
+ height: 30px;
+ width: 30px;
+ position: fixed;
+ bottom: 40px;
+ right: 10px;
+ box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+ text-indent: 100%;
+ white-space: nowrap;
+ background: url('/static/images/icons/cd-top-arrow.svg') center 50% no-repeat #477883;
+ visibility: hidden;
+ opacity: 0;
+ -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+ -moz-transition: opacity .3s 0s, visibility 0s .3s;
+ transition: opacity .3s 0s, visibility 0s .3s;
+ border-radius: 50%
+}
 
-	.comments-list .comment-box {
-		width: 390px;
-	}
+.cd-top.cd-fade-out, .cd-top.cd-is-visible, .no-touch .cd-top:hover {
+ -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+ -moz-transition: opacity .3s 0s, visibility 0s 0s;
+ transition: opacity .3s 0s, visibility 0s 0s
+}
 
-	.reply-list .comment-box {
-		width: 320px;
-	}
+.cd-top.cd-is-visible {
+ visibility: visible;
+ opacity: 1
+}
+
+.cd-top.cd-fade-out {
+ opacity: .5
+}
+
+.no-touch .cd-top:hover {
+ background-color: #595986;
+ opacity: 1
+}
+
+@media only screen and (min-width:768px) {
+ .cd-top {
+ right: 20px;
+ bottom: 20px
+ }
+}
+
+@media only screen and (min-width:1024px) {
+ .cd-top {
+ height: 60px;
+ width: 60px;
+ right: 30px;
+ bottom: 30px
+ }
+}
+
+
