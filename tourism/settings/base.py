@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'snowpenguin.django.recaptcha2',
     'tagging',
     'ckeditor',
+    'bootstrap3',
     'apps.posts',
     'apps.comments',
     'apps.contact',
@@ -93,17 +94,37 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_PATH = os.path.join(BASE_DIR, 'content')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (STATIC_PATH,)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 MEDIA_URL = '/media/'
+
+# CKEditor settings
+CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+# Setting for reduce image of article
 THUMB_WIDTH = 150
 THUMB_HEIGHT = 225
+
+# Google Recaptcha settings
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+
+# Email settings
+FEEDBACK_EMAIL = 'artem@localhost'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+
+BOOTSTRAP3 = {
+    # Label class to use in horizontal forms
+    'horizontal_label_class': 'col-sm-2',
+    # Field class to use in horizontal forms
+    'horizontal_field_class': 'col-sm-8',
+}
 
 
 def get_env_variable(var_name):
