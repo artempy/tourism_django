@@ -20,6 +20,7 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^contact/', include('apps.contact.urls')),
     url(r'^', include('apps.posts.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
