@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article)
+    article_id = models.ForeignKey(Article, verbose_name='Статья')
     author = models.CharField(max_length=64, verbose_name='Автор')
     email_author = models.EmailField(verbose_name='Email адрес')
     text = models.TextField(verbose_name='Комментарий')
