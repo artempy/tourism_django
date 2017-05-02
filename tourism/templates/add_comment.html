@@ -1,0 +1,30 @@
+<br /><br /><br />
+{% load recaptcha2 %}
+{% recaptcha_init 'ru' %}
+<div align="center">
+<h3>Добавить комментарий</h3>
+{% load bootstrap3 %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{# Display a form #}
+
+<form role="form" class="form-horizontal" action="" method="POST">
+  {% csrf_token %}
+  {% if form.errors %}
+  {% bootstrap_alert 'Ошибка! Пожалуйста, исправьте заполненные поля формы и повторите попытку.' alert_type='danger' %}
+  {% elif success %}
+  {% bootstrap_alert 'Спасибо за ваш комментарий! После проверки модератором он будет опубликован.' alert_type='success' %}
+  {% endif %}
+  {% bootstrap_field form.author placeholder='Ваше имя' layout='horizontal' size='md' %}
+  {% bootstrap_field form.email_author placeholder='Ваш email' layout='horizontal' size='md' %}
+  {% bootstrap_field form.text placeholder='Комментарий' layout='horizontal' size='md' %}
+  {% bootstrap_field form.captcha layout='horizontal' size='md' %}
+  {% buttons %}
+    <button type="submit" formnovalidate class="btn btn-primary">
+      {% bootstrap_icon "ok" %} Отправить
+    </button>
+  {% endbuttons %}
+</form>
+</div>
