@@ -1,15 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render_to_response, render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views.generic.list import ListView
 from apps.posts.models import Category, Article
+from apps.comments.views import show_comments, add_comment
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    return render_to_response('index.html', {})
 
 
 def search(request):
-    return render(request, 'index.html', {})
+    return render_to_response('index.html', {})
 
 
 class ShowCat(ListView):
@@ -25,7 +26,7 @@ class ShowCat(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Article.objects.filter(category=self.cat)
+        return Article.objects.filter(category=self.cat).order_by('-date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,14 +38,26 @@ class ShowCat(ListView):
         return context
 
 
-def show_article(request, category_slug, article_slug):
+def show_article(request, category_slug, article_slug, page=None):
+    success = None
     cat = get_object_or_404(Category, slug=category_slug)
     article = get_object_or_404(Article, slug=article_slug)
+
+    # Getting comments for current article
+    comments = show_comments(request, article, page)
+
+    # Getting form add comment and status
+    form, success = add_comment(request, article)
+
     context_dict = {
         'title_meta': article.title_meta,
         'description_meta': article.description_meta,
         'category': cat,
-        'article': article
+        'article': article,
+        'form': form,
+        'success': success,
+        'comments': comments,
+        'starturl': reverse('article', args=[cat.slug, article_slug])
     }
 
     return render(request, 'article.html', context_dict)
