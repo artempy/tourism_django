@@ -1,35 +1,33 @@
-<div class="pagination">
-<ul class="pagination">
+<nav aria-label="Page navigation example">
+<div class="paginate">
+<ul class="pagination justify-content-center">
     {% if page_obj.has_previous %}
-        <li>
-            <a href="{{ starturl }}page/{{ page_obj.previous_page_number }}/" title="Предыдущая страница">
-            <span>&laquo;</span>
-            </a>
+        <li >
+            <a aria-label="Previous" class="page-link" href="{{ starturl }}page/{{ page_obj.previous_page_number }}/" title="Предыдущая страница"><span>&laquo;</span></a>
         </li>
     {% else %}
         <li class="disabled">
-            <a href="#">
-            <span>&laquo;</span>
-            </a>
+            <a class="page-link" href="#"><span>&laquo;</span></a>
         </li>
     {% endif %}
         {% for i in paginator.page_range %}
             {% if page_obj.number == i %}
             <li class="active"><a href="#">{{i}}</a></li>
             {% else %}
-              <li><a href="{{ starturl }}page/{{ i }}/">{{i}}</a></li>
+              <li ><a class="page-link" href="{{ starturl }}page/{{ i }}/">{{i}}</a></li>
             {% endif %}
         {% endfor %}
     {% if page_obj.has_next %}
-        <li>
-            <span><a href="{{ starturl }}page/{{ page_obj.next_page_number }}/" title="Следующая страница">&raquo;</a></span>
+        <li >
+            <a class="page-link" href="{{ starturl }}page/{{ page_obj.next_page_number }}/" title="Следующая страница"><span>&raquo;</span></a>
         </li>
     {% else %}
         <li class="disabled">
-            <a href="#">
+            <a class="page-link" href="#">
             <span>&raquo;</span>
             </a>
         </li>
     {% endif %}
 </ul>
 </div>
+</nav>
