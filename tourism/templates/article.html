@@ -3,13 +3,14 @@
 {% block title %}{% if title_meta %}{{ title_meta }}{% endif %}{% endblock %}
 {% if description_meta %}{% block meta_description %}{{ description_meta }}{% endblock %}{% endif %}
 {% block content %}
+
 {% if article %}
     <div class="spacer"></div>
     <div id="post-{{ article.id }}" class="postbox post-{{ article.id }} post type-post status-publish format-standard has-post-thumbnail hentry">
         <div class="postbox2">
             <div class="postbox3">
                 <div class="post_title">
-                    <h2>{{ article.name }}</h2>
+                    <h1>{{ article.name }}</h1>
                 </div>
                 <div class="post_author_date"> </div>
                 <div class="clear"></div>
@@ -31,6 +32,7 @@
         </div><!-- #postbox2 -->
     </div><!-- #postbox -->
 {% include 'comments.html' %}
+{% include 'add_comment.html' %}
 {% else %}
     <div class="entry">Запись не найдена!</div>
 {% endif %}
