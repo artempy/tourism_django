@@ -26,6 +26,14 @@ class ArticlePageMixin(models.Model):
             num += 1
         return unique_slug
 
+    def _resize_thumb(self, THUMB_WIDTH=250, THUMB_HEIGHT=180):
+        """Create reduced image for article"""
+        image = Image.open(self.thumb)
+        (width, height) = image.size
+        size = (THUMB_WIDTH, THUMB_HEIGHT)
+        image = image.resize(size, Image.ANTIALIAS)
+        image.save(self.thumb.path)
+
     def _generate_metatags(self, text, max_length=80):
         text = strip_tags(text)
         if len(text) <= max_length:
@@ -55,9 +63,16 @@ class ArticlePageMixin(models.Model):
 class Category(ArticlePageMixin):
     name = models.CharField(max_length=128,
                             unique=True, verbose_name='Название')
+    short_name = models.CharField(max_length=32,
+                                  verbose_name='Сокращенное название')
     description = models.TextField(verbose_name='Описание')
-    icon = models.URLField(null=True, blank=True,
-                           verbose_name='Адрес к иконке')
+    thumb = models.ImageField(
+        upload_to='images/cat_icon/',
+        blank=True,
+        null=True,
+        verbose_name='Изображение',
+        editable=True
+    )
 
     class Meta:
         verbose_name = 'Категория'
@@ -73,6 +88,11 @@ class Category(ArticlePageMixin):
                 self._generate_metatags(self.description, 145)
 
         super().save(*args, **kwargs)
+
+        if self.thumb:
+            THUMB_WIDTH = getattr(settings, 'THUMB_WIDTH_CAT', 250)
+            THUMB_HEIGHT = getattr(settings, 'THUMB_HEIGHT_CAT', 150)
+            self._resize_thumb(THUMB_WIDTH, THUMB_HEIGHT)
 
 
 class Article(ArticlePageMixin):
@@ -99,16 +119,6 @@ class Article(ArticlePageMixin):
         words = list(filter(lambda word: len(word) > 3, words))
         return " ".join(words).lower()
 
-    def _resize_thumb(self):
-        """Create reduced image for article"""
-        image = Image.open(self.thumb)
-        (width, height) = image.size
-        THUMB_WIDTH = getattr(settings, 'THUMB_WIDTH', 150)
-        THUMB_HEIGHT = getattr(settings, 'THUMB_HEIGHT', 225)
-        size = (THUMB_WIDTH, THUMB_HEIGHT)
-        image = image.resize(size, Image.ANTIALIAS)
-        image.save(self.thumb.path)
-
     def save(self, *args, **kwargs):
         """If tags not determinated then generating their"""
         if not self.tags:
@@ -127,7 +137,9 @@ class Article(ArticlePageMixin):
         super().save(*args, **kwargs)
         """Resize image"""
         if self.thumb:
-            self._resize_thumb()
+            THUMB_WIDTH = getattr(settings, 'THUMB_WIDTH', 150)
+            THUMB_HEIGHT = getattr(settings, 'THUMB_HEIGHT', 225)
+            self._resize_thumb(THUMB_WIDTH, THUMB_HEIGHT)
 
     class Meta:
         verbose_name = 'Статья'
