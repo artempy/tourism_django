@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Результаты поиска по вашему запросу &laquo;{{ query }}&raquo;{% endblock %}
+{% block meta_description %}{% endblock %}
+{% block content %}
+<br /><div class="alert alert-info">Результаты поиска по вашему запросу &laquo;{{ query }}&raquo;:</div>
+{% if results %}
+    {% for post in results %}
+    <div id="post-{{ post.id }}" class="postbox post-{{ post.id }} post type-post status-publish format-standard has-post-thumbnail hentry">
+        <div class="postbox2">
+            <div class="postbox3">
+                <div class="post_title">
+                    <h2><a target="_blank" href="{% url 'article' post.slug_cat_unique post.slug %}" rel="bookmark" title="{{ post.name }}">{{ post.name }}</a></h2>
+                </div>
+                <div class="post_author_date"> </div>
+                <div class="clear"></div>
+                <div class="entry">
+                    {% if post.thumb %}
+                    <img width="{{ post.thumb.width }}" height="{{ post.thumb.height }}" src="{{ post.thumb.url }}" class="img-rounded alignleft post_thumbnail wp-post-image" alt="{{ post.name }}" />
+                    {% endif %}
+                    <p>{{ post.short_post|safe }}</p>
+                    <div class="clear"></div>
+                </div>
+                <div class="info">
+                    <span class="info_category">Раздел:
+                    {% if post.category %}
+                        {% for cat in post.category.all %}
+                        <a href="{% url 'category' cat.slug %}" rel="category tag">{{ cat.name }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    </span>&nbsp;
+                    <span class="info_comment"><a target="_blank" href="{% url 'article' post.slug_cat_unique post.slug %}" rel="bookmark" title="{{ post.title }}">Читать далее...</a></span>
+                </div>
+            </div><!-- #postbox3 -->
+        </div><!-- #postbox2 -->
+    </div><!-- #postbox -->
+    {% endfor %}
+{% else %}
+    <div class="alert alert-danger">По данному запросу ничего не найдено!</div>
+{% endif %}
+{% endblock %}
