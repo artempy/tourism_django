@@ -21,7 +21,9 @@
                 <div class="post_author_date"> </div>
                 <div class="clear"></div>
                 <div class="entry">
-                    <img width="200" height="138" src="http://veuropetourism.ru/wp-content/uploads/2012/12/Glavnye_dostoprimechatelnosti_Danii-400x275.jpg" class="alignleft post_thumbnail wp-post-image" alt="Главные достопримечательности Дании" sizes="(max-width: 200px) 100vw, 200px" />
+                    {% if post.thumb %}
+                    <img width="{{ post.thumb.width }}" height="{{ post.thumb.height }}" src="{{ post.thumb.url }}" class="img-thumbnail alignleft post_thumbnail wp-post-image" alt="{{ post.name }}" />
+                    {% endif %}
                     <p>{{ post.short_post|safe }}</p>
                     <div class="clear"></div>
                 </div>
@@ -33,7 +35,7 @@
                     {% endfor %}
                     {% endif %}
                     </span>&nbsp;
-                    <span class="info_comment"><a href="{% url 'article' category.slug post.slug %}" rel="bookmark" title="{{ post.title }}">Читать далее...</a></span>
+                    <span class="info_comment"><a href="{% url 'article' post.slug_cat_unique post.slug %}" rel="bookmark" title="{{ post.title }}">Читать далее...</a></span>
                 </div>
             </div><!-- #postbox3 -->
         </div><!-- #postbox2 -->
