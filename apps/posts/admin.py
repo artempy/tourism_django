@@ -28,11 +28,12 @@ class CategoryAdminForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name',
+                  'short_name',
                   'description',
                   'slug',
                   'title_meta',
                   'description_meta',
-                  'icon'
+                  'thumb'
                   )
 
 
@@ -61,11 +62,12 @@ class ArticleAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     fields = ('name',
+              'short_name',
               'description',
               'slug',
               'title_meta',
               'description_meta',
-              'icon')
+              'thumb')
     form = CategoryAdminForm
 
 
