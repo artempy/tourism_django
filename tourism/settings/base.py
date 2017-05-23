@@ -106,8 +106,12 @@ CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 # Setting for reduce image of article
-THUMB_WIDTH = 150
-THUMB_HEIGHT = 225
+THUMB_WIDTH = 180
+THUMB_HEIGHT = 120
+
+# Setting for reduce image of category
+THUMB_WIDTH_CAT = 225
+THUMB_HEIGHT_CAT = 150
 
 # Google Recaptcha settings
 RECAPTCHA_PUBLIC_KEY = ''
