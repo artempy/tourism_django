@@ -40,7 +40,6 @@ table { /* tables still need 'cellspacing="0"' in the markup */
 a img {
     border: none;
 }
-
 /*  [ Basic HTML ]                                                  */<!-- -->
 body{
     position:relative; /*maybe wp_footer using absolute bottom*/
@@ -576,7 +575,7 @@ background:none;
     position:relative;
     overflow:hidden;
     width:526px;
-    height:36px;/*89*/
+    height:76px;/*89*/
     margin-bottom:10px;
     padding:20px 30px 33px 90px;
     background:url(/static/images/bg_post_title.jpg) no-repeat left top;
@@ -1451,4 +1450,11 @@ img.page_icon, img.category_icon {
  }
 }
 
-
+#imagelightbox
+{
+    position: fixed;
+    z-index: 9999;
+ 
+    -ms-touch-action: none;
+    touch-action: none;
+}
