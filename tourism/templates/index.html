@@ -13,24 +13,26 @@
     <div class="spacer">&nbsp;</div>
 {% if categories %}
     {% for category in categories %}
+    {% if category.short_description %}
     <div id="post-{{ category.id }}" class="postbox post-{{ category.id }} post type-post status-publish format-standard has-post-thumbnail hentry">
         <div class="postbox2">
             <div class="postbox3">
                 <div class="post_title">
-                    <h2><a href="{% url 'category' category.slug %}" rel="bookmark" title="{{ category.name }}">{{ category.short_name }}</a></h2>
+                    <h2><a target="_blank" href="{% url 'category' category.slug %}" rel="bookmark" title="{{ category.name }}">{{ category.short_name }}</a></h2>
                 </div>
                 <div class="post_author_date"> </div>
                 <div class="clear"></div>
                 <div class="entry">
                     {% if category.thumb %}
-                    <img width="{{ category.thumb.width }}" height="{{ category.thumb.height }}" src="{{ category.thumb.url }}" class="img-circle alignleft post_thumbnail wp-post-image" alt="{{ category.name }}" />
+                    <a target="_blank" href="{% url 'category' category.slug %}" rel="bookmark" title="{{ category.name }}"><img width="{{ category.thumb.width }}" height="{{ category.thumb.height }}" src="{{ category.thumb.url }}" class="img-circle alignleft post_thumbnail wp-post-image" alt="{{ category.name }}" /></a>
                     {% endif %}
-                    <p>{{ category.description|safe }}</p>
+                    <p>{{ category.short_description|safe }}</p>
                     <div class="clear"></div>
                 </div>
             </div><!-- #postbox3 -->
         </div><!-- #postbox2 -->
     </div><!-- #postbox -->
+    {% endif %}
     {% endfor %}
 {% endif %}
 {% endblock %}
