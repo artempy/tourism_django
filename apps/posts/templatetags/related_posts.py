@@ -13,6 +13,6 @@ def related_posts(tags, current_id_article):
         Article, tags
     ).exclude(
         pk=current_id_article
-    )[:4]
+    )[:3]
 
     return {'related_posts': posts}
