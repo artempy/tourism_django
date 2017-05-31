@@ -30,11 +30,11 @@ class CategoryAdminForm(forms.ModelForm):
         fields = ('name',
                   'short_name',
                   'description',
+                  'short_description',
                   'slug',
                   'title_meta',
                   'description_meta',
-                  'thumb'
-                  )
+                  'thumb')
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -48,6 +48,7 @@ class ArticleAdmin(admin.ModelAdmin):
     ]
     filter_horizontal = ('category',)
     prepopulated_fields = {'slug': ('name',)}
+    list_filter = ('category',)
     form = ArticleAdminForm
 
     def save_model(self, request, instance, form, change):
@@ -64,6 +65,7 @@ class CategoryAdmin(admin.ModelAdmin):
     fields = ('name',
               'short_name',
               'description',
+              'short_description',
               'slug',
               'title_meta',
               'description_meta',
