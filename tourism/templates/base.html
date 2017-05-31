@@ -14,19 +14,26 @@
         <link rel="stylesheet" href="{% static 'css/client.css' %}" type="text/css" media="all" />
         <style type="text/css">#content{float:right;} div.menu ul li{float:left;}</style>
         <script type="text/javascript" src="{% static 'js/general.js' %}"></script>
+        <script src="{% static 'js/imagelightbox.min.js' %}"></script>
+        <script>
+            $( function()
+            {
+                $( '.entry p a' ).imageLightbox();
+            });
+        </script>
         <link rel="icon" href="{% static 'images/favicon.ico' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
     </head>
     <body class="home blog">
         <div id="bg_top"><div id="bg_btm"><div id="base"><div id="base_top"><div id="base_btm">
             <div id="header">
-                        <div id="blog_name"><a href="http://veuropetourism.ru/" title="Туризм и путешествия по Европе" rel="home">Туризм и путешествия по Европе</a></div>
+                        <div id="blog_name"><a href="/" title="Туризм и путешествия по Европе" rel="home">Туризм и путешествия по Европе</a></div>
                 <div id="blog_desc">Страны и города Европы</div>
-                <a href="http://veuropetourism.ru/" title="Туризм в Европе" class="home"></a>
+                <a href="/" title="Туризм в Европе" class="home"></a>
 
             </div><!-- #header -->
             <div id="menubar">
-                <div class="menu"><ul><li><a href="/category/dostoprimechatelnosti_europe">Достопримечательности</a></li><li><a href="/category/prazdniki_v_europe">Праздники</a></li><li><a href="/category/strany_goroda_europe">Города</a></li><li><a href="/category/pogoda_v_stranah_europe">Погода</a></li></ul></div>
+                <div class="menu"><ul><li><a href="{% url 'category' 'dostoprimechatelnosti_europe' %}">Достопримечательности</a></li><li><a href="{% url 'category' 'prazdniki_v_europe' %}">Праздники</a></li><li><a href="{% url 'category' 'strany_goroda_europe' %}">Города</a></li><li><a href="{% url 'category' 'pogoda_v_stranah_europe' %}">Погода</a></li></ul></div>
                 <form class="mainsearch" action="{% url 'search' %}" method="POST">
                     {% csrf_token %}
                     <input class="keyword" type="text" name="q" id="s"/>
@@ -56,7 +63,7 @@
             <div id="footer">
                 <div id="footer_credit">
                 &copy; 2012 - {% now 'Y' %} - Туризм и путешествия по Европе (<a href="{% url 'contact' %}" style="border-bottom: 1px dotted">Обратная связь</a>).
-                Частичное использование материалов сайта возможно только с установкой индексируемой ссылки на сайт <a href="http://veuropetourism.ru/">http://veuropetourism.ru/</a>
+                Частичное использование материалов сайта возможно только с установкой индексируемой ссылки на сайт
                 <a href="#top" class="cd-top">Наверх</a>
                     </div>
             </div><!-- footer -->
