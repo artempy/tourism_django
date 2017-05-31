@@ -10,7 +10,7 @@ from tagging.fields import TagField
 
 
 class ArticlePageMixin(models.Model):
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=120, unique=True)
     title_meta = models.CharField(max_length=80, null=True, blank=True)
     description_meta = models.CharField(max_length=150, null=True, blank=True)
 
@@ -22,7 +22,7 @@ class ArticlePageMixin(models.Model):
         num = 1
         """If slug of article exists in DB then change name's slug"""
         while self.__class__.objects.filter(slug=unique_slug).exists():
-            unique_slug = '{1}-{2}'.format(slug, num)
+            unique_slug = '{}-{}'.format(slug, num)
             num += 1
         return unique_slug
 
@@ -63,16 +63,18 @@ class ArticlePageMixin(models.Model):
 class Category(ArticlePageMixin):
     name = models.CharField(max_length=128,
                             unique=True, verbose_name='Название')
-    short_name = models.CharField(max_length=32,
+    short_name = models.CharField(max_length=32, blank=True, null=True,
                                   verbose_name='Сокращенное название')
-    description = models.TextField(verbose_name='Описание')
+    description = models.TextField(blank=True, null=True,
+                                   verbose_name='Описание')
+    short_description = models.CharField(max_length=356, blank=True, null=True,
+                                         verbose_name='Сокращенное описание')
     thumb = models.ImageField(
         upload_to='images/cat_icon/',
         blank=True,
         null=True,
         verbose_name='Изображение',
-        editable=True
-    )
+        editable=True)
 
     class Meta:
         verbose_name = 'Категория'
@@ -82,10 +84,10 @@ class Category(ArticlePageMixin):
         """If no set meta-parameters html - title or description then
         generate their"""
         if not self.title_meta:
-            self.title_meta = self._generate_metatags(self.name, 75)
+            self.title_meta = self._generate_metatags(self.name, 55)
         if not self.description_meta:
             self.description_meta = \
-                self._generate_metatags(self.description, 145)
+                self._generate_metatags(self.description, 100)
 
         super().save(*args, **kwargs)
 
@@ -108,8 +110,7 @@ class Article(ArticlePageMixin):
         blank=True,
         null=True,
         verbose_name='Изображение',
-        editable=True
-    )
+        editable=True)
     tags = TagField(blank=True)
     likes = models.IntegerField(default=0, db_index=True, blank=True)
 
@@ -129,10 +130,10 @@ class Article(ArticlePageMixin):
         """If no set meta-parameters html - title or description then
         generate their"""
         if not self.title_meta:
-            self.title_meta = self._generate_metatags(self.name, 75)
+            self.title_meta = self._generate_metatags(self.name, 55)
         if not self.description_meta:
             self.description_meta = \
-                self._generate_metatags(self.full_post, 145)
+                self._generate_metatags(self.full_post, 100)
 
         super().save(*args, **kwargs)
         """Resize image"""
