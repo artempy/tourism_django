@@ -17,13 +17,23 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from django.views.decorators.cache import cache_page
+from apps.sitemaps import SITEMAPS
 
+
+FIVE_DAYS = 5 * 24 * 60 * 60
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^contact/', include('apps.contact.urls')),
     url(r'^', include('apps.posts.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+]
+
+urlpatterns += [
+    url(r'^sitemap\.xml$', cache_page(FIVE_DAYS)(sitemap),
+        {'sitemaps': SITEMAPS}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:
