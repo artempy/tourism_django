@@ -6,15 +6,15 @@ from django.views.generic.list import ListView
 from django.db.models import Q
 from apps.posts.models import Category, Article
 from apps.comments.views import show_comments, add_comment
+from django.views.decorators.cache import cache_page
 
 
+FIVE_DAYS = 5 * 24 * 60 * 60
+
+
+@cache_page(FIVE_DAYS)
 def index(request):
     categories = Category.objects.all().order_by('name')
-    for category in categories:
-        # IF p tag occur in text then get first paragraph
-        if '</p>' in category.description:
-            category.description = category.description.split("</p>")[0]\
-                .replace('<p>', '')
     return render(request, 'index.html', {'categories': categories})
 
 
@@ -58,6 +58,7 @@ class ShowCat(ListView):
         return context
 
 
+@cache_page(FIVE_DAYS)
 def show_article(request, category_slug, article_slug, page=None):
     success = None
     cat = get_object_or_404(Category, slug=category_slug)
