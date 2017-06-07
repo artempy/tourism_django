@@ -4,8 +4,6 @@ from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEBUG = True
-
 ALLOWED_HOSTS = []
 
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -102,10 +100,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_URL = '/static/'
+STATIC_URL = '/content/'
 STATIC_PATH = os.path.join(BASE_DIR, 'content')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (STATIC_PATH,)
+STATICFILES_DIRS = (STATIC_ROOT,)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
@@ -126,10 +124,13 @@ RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
 
 # Email settings
-FEEDBACK_EMAIL = 'artem@localhost'
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 25
-EMAIL_USE_TLS = False
+FEEDBACK_EMAIL = 'to_login@gmail.com'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'login@yandex.ru'
+FROM_EMAIL = "login@yandex.ru"
+EMAIL_HOST_PASSWORD = 'pass'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 BOOTSTRAP3 = {
     # Label class to use in horizontal forms
