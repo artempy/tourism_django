@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.decorators.cache import cache_page
 from apps.sitemaps import SITEMAPS
+from django.shortcuts import render
 
 
 FIVE_DAYS = 5 * 24 * 60 * 60
@@ -34,6 +35,8 @@ urlpatterns = [
 urlpatterns += [
     url(r'^sitemap\.xml$', cache_page(FIVE_DAYS)(sitemap),
         {'sitemaps': SITEMAPS}, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^robots\.txt$', lambda request: render(request, 'robots.txt'),
+        name="home"),
 ]
 
 if settings.DEBUG:
