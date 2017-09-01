@@ -1,1 +1,1 @@
-Small site about tourism written in Django web framework. You will be able to adapt it for any purposes.
+Small site about tourism written on Django web framework. You can adapt it to your own purposes.
