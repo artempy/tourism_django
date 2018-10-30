@@ -3,8 +3,10 @@ from apps.contact.forms import ContactForm
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def contact_form(request):
     success = None
     if request.method == 'POST':

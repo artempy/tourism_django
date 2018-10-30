@@ -7,6 +7,7 @@ from django.db.models import Q
 from apps.posts.models import Category, Article
 from apps.comments.views import show_comments, add_comment
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 
 
 FIVE_DAYS = 5 * 24 * 60 * 60
@@ -18,6 +19,7 @@ def index(request):
     return render(request, 'index.html', {'categories': categories})
 
 
+@csrf_exempt
 def search(request):
     if request.method == 'POST':
         query = request.POST.get('q')
