@@ -1,7 +1,7 @@
 appdirs==1.4.3
 certifi==2018.10.15
 chardet==3.0.4
-Django==1.11.16
+Django==1.11.18
 django-bootstrap3==11.0.0
 django-ckeditor==5.6.1
 django-debug-toolbar==1.7
