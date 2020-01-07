@@ -1,3 +1,4 @@
 *.py linguist-language=Python
-tourism/static/* linguist-vendored
-tourism/content/* linguist-vendored
+src/tourism/static_custom/* linguist-vendored
+src/tourism/static/* linguist-vendored
+src/tourism/content/* linguist-vendored
