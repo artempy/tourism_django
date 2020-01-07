@@ -1,0 +1,41 @@
+version: "3"
+
+volumes:
+  pgdata:
+    driver: local
+services:
+  nginx:
+    #restart: always
+    image: nginx:latest
+    expose:
+      - 8080
+    ports:
+      - "80:8080"
+    volumes:
+      - ./src/tourism/content:/www/src/content
+      - ./src/tourism/media:/www/src/media
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - django
+  django:
+    #restart: always
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile
+    volumes:
+      - ./src:/www/src
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+  postgres:
+    image: postgres:10
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_DB: db_name
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - pgdata:/var/lib/postgresql/data

@@ -1,0 +1,72 @@
+#localnav {
+    margin:0 auto;
+    padding:0px;
+    border: none;
+    width:986px;
+    height:50px;
+    background: transparent url('img/bg_top.gif') no-repeat;
+    margin-bottom:10px;
+}
+#localnav div.header_section {
+    float:left;
+    width:100%;
+}
+#localnav .divh1 {
+    font-family:arial;
+    font-size:16px;
+    font-weight:bold;
+    padding:0px;
+    padding-top:8px;
+    text-align:left;
+    width:100%;
+    margin:0px;
+}
+
+#localnav .divh1 div.tophlopka{
+    float:left;
+    padding:0px 21px;
+    height:20px;
+
+}
+
+#localnav .divh1 div.lasthlopka {
+    float:right;
+}
+#localnav .divh1 div.lasthlopka a{
+    color:#88ff99;
+}
+
+#localnav .divh1 a {
+    color:#fff;
+    outline-color:-moz-use-text-color;
+    outline-style:none;
+    outline-width:medium;
+    text-decoration:none;
+    padding:0px;
+}
+#localnav .divh1 a:hover, #localnav .divh1 div.selectedhlopka a{
+    color:#ff9955 !important;
+    border-bottom:1px dotted #ff9955;
+}
+
+.clear_4_menu{
+    content: ".";
+    display: block;;
+    height: 0px;
+    clear:both;
+    font-size:0px;
+    height:1px;
+    width:0%;
+    border-width:0px;
+    margin:0px;
+    padding:0px;
+    visibility:hidden;
+}
+.menulabels {
+    font-size: 9px;
+    text-align: left;
+    margin-top: 0px;
+    color: rgb(170, 170, 170);
+    text-decoration: none;
+    margin-left: 0px;
+}
