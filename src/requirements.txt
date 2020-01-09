@@ -19,6 +19,6 @@ pytz==2018.7
 requests==2.20.0
 six==1.11.0
 sqlparse==0.2.4
-urllib3==1.24
+urllib3==1.24.2
 uWSGI==2.0.17.1
 django-environ==0.4.5
