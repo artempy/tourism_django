@@ -1,5 +1,5 @@
 appdirs==1.4.3
-certifi==2018.10.15
+certifi==2022.12.7
 chardet==3.0.4
 Django==1.11.27
 django-bootstrap3==11.0.0
